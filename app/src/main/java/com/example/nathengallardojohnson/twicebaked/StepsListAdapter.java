@@ -16,9 +16,9 @@ public class StepsListAdapter extends RecyclerView.Adapter<StepsListAdapter.Step
 
     private final LayoutInflater mInflater;
     private final Context context;
-    List<Steps> stepsList;
+    private List<Steps> stepsList;
 
-    public StepsListAdapter(Context context, List<Steps> stepsList) {
+    StepsListAdapter(Context context, List<Steps> stepsList) {
         this.context = context;
         mInflater = LayoutInflater.from(context);
         this.stepsList = stepsList;
@@ -45,7 +45,7 @@ public class StepsListAdapter extends RecyclerView.Adapter<StepsListAdapter.Step
         return stepsList.size() + 1;
     }
 
-    public class StepListViewHolder extends RecyclerView.ViewHolder {
+    class StepListViewHolder extends RecyclerView.ViewHolder {
         TextView idTextView;
         TextView shortDescriptionTextView;
         final Context mContext;
@@ -53,7 +53,7 @@ public class StepsListAdapter extends RecyclerView.Adapter<StepsListAdapter.Step
         StepListViewHolder(View itemView, Context context) {
             super(itemView);
             mContext = context;
-            this.idTextView = itemView.findViewById(R.id.item_number);
+            this.idTextView = itemView.findViewById(R.id.step_number);
             this.shortDescriptionTextView = itemView.findViewById(R.id.short_description);
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -65,11 +65,11 @@ public class StepsListAdapter extends RecyclerView.Adapter<StepsListAdapter.Step
             });
         }
 
-        public void populate() {
-            shortDescriptionTextView.setText("Ingredients");
+        void populate() {
+            shortDescriptionTextView.setText(R.string.ingredients);
         }
 
-        public void populate(Steps steps){
+        void populate(Steps steps) {
             if (steps.getId() >= 0) {
                 idTextView.setText(Float.toString(steps.getId()));
                 shortDescriptionTextView.setText(steps.getShortDescription());

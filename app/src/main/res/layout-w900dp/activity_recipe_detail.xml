@@ -43,10 +43,13 @@ master/detail flow.
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/back_repeat"
         android:orientation="horizontal">
+
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/recipe_step_container"
             android:layout_width="match_parent"

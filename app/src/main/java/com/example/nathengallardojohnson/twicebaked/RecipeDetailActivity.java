@@ -44,7 +44,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeSte
                     .add(R.id.recipe_step_container, recipeStepsFragment)
                     .commit();
             // If this is a tablet, add the ingredient fragment as well
-            if (Baking.twoPane) {
+            if (findViewById(R.id.recipe_detail_container) != null) {
+                Baking.twoPane = true;
                 IngredientsFragment ingredientsFragment = new IngredientsFragment();
                 ingredientsFragment.setArguments(arguments);
                 getSupportFragmentManager().beginTransaction()
