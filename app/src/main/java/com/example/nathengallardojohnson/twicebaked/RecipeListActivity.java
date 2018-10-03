@@ -1,26 +1,17 @@
 package com.example.nathengallardojohnson.twicebaked;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.example.nathengallardojohnson.twicebaked.dummy.DummyContent;
-
-import java.util.List;
 
 public class RecipeListActivity extends AppCompatActivity {
 
-    private boolean mTwoPane;
+    private String TAG = String.valueOf(getClass());
     public static String ARG_RECIPE_ID = "recipe";
 
     @Override
@@ -28,17 +19,14 @@ public class RecipeListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
 
         if (findViewById(R.id.recipe_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-w900dp).
-            // If this view is present, then the
-            // activity should be in two-pane mode.
-            mTwoPane = true;
+            //This sets the two pane mode for the app
+            Baking.twoPane = true;
         }
 
         View recyclerView = findViewById(R.id.recipe_list);
@@ -47,7 +35,11 @@ public class RecipeListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        //recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, DummyContent.ITEMS, mTwoPane));
+        if (Baking.twoPane) {
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        } else {
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        }
         recyclerView.setAdapter(new RecipeListAdapter(this));
     }
 

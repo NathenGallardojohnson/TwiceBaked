@@ -11,6 +11,7 @@ import java.util.List;
 public class Baking extends Application {
     private static Baking singleton = new Baking();
     public static List<Recipe> recipeList = new ArrayList<>();
+    public static boolean twoPane;
 
     @Override
     public void onCreate() {

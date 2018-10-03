@@ -10,7 +10,6 @@ public class Steps {
     public Steps() {
     }
 
-
     public Steps(int id, String shortDescription, String description, String videoURL, String thumbnailURL) {
         super();
         this.id = id;
@@ -30,7 +29,7 @@ public class Steps {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
@@ -38,24 +37,25 @@ public class Steps {
     }
 
     public String getShortDescription() {
-        return shortDescription;
+        return this.shortDescription;
     }
 
     public void setShortDescription(String shortDescription) { this.shortDescription = shortDescription; }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public void setDescription(String description) { this.description = description; }
+
     public String getVideoURL() {
-        return videoURL;
+        return this.videoURL;
     }
 
     public void setVideoURL(String videoURL) { this.videoURL = videoURL; }
 
     public String getThumbnailURL() {
-        return thumbnailURL;
+        return this.thumbnailURL;
     }
 
     public void setThumbnailURL(String thumbnailURL) {

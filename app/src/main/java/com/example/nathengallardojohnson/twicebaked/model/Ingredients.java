@@ -16,16 +16,16 @@ public class Ingredients {
         this.ingredient = ingredient;
     }
 
-    public Ingredients(Ingredients ingredient) {
+    public Ingredients(Ingredients mIngredient) {
         super();
-        this.quantity = ingredient.getQuantity();
-        this.measure = ingredient.getMeasure();
-        this.ingredient = ingredient.getIngredient();
+        this.quantity = mIngredient.getQuantity();
+        this.measure = mIngredient.getMeasure();
+        this.ingredient = mIngredient.getIngredient();
     }
 
 
     public String getIngredient() {
-        return ingredient;
+        return this.ingredient;
     }
 
     public void setIngredient(String ingredient) {
@@ -33,7 +33,7 @@ public class Ingredients {
     }
 
     public float getQuantity() {
-        return quantity;
+        return this.quantity;
     }
 
     public void setQuantity(float quantity) {
@@ -41,7 +41,7 @@ public class Ingredients {
     }
 
     public String getMeasure() {
-        return measure;
+        return this.measure;
     }
 
     public void setMeasure(String measure) {

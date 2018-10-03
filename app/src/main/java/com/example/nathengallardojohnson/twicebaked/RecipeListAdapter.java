@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
     private final LayoutInflater mInflater;
     private final Context context;
+    private String TAG = String.valueOf(getClass());
 
     public RecipeListAdapter(Context context) {
         this.context = context;
@@ -32,42 +34,50 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
     @Override
     public void onBindViewHolder(@NonNull RecipeListAdapter.RecipeListViewHolder holder, int position) {
-        Recipe currentRecipe = null;
-        if (Baking.recipeList != null) {
-            currentRecipe = Baking.recipeList.get(position);
-            if(currentRecipe.getName() != null) {
-                String name = currentRecipe.getName();
-                String servings = Integer.toString(currentRecipe.getServings());
-                holder.nameTextView.setText(name);
-                holder.servingsTextView.setText(servings);
+        try {
+            Recipe currentRecipe = Baking.recipeList.get(position);
+            if (currentRecipe.getName() != null) {
+                holder.nameTextView.setText(currentRecipe.getName());
+                Log.d(TAG, "currentRecipeName: " + currentRecipe.getName());
+
             } else
                 holder.nameTextView.setText(R.string.no_data);
+            if (currentRecipe.getServings() > 0) {
+                holder.servingsTextView.setText(Integer.toString(currentRecipe.getServings()));
+                Log.d(TAG, "currentRecipeServings: " + currentRecipe.getServings());
+            } else
+                holder.servingsTextView.setText(R.string.no_data);
+        } catch (Exception e) {
+            Log.d(TAG, "onBindViewHolder: " + e);
         }
     }
 
     @Override
     public int getItemCount() {
-        return Baking.recipeList.size();
+        int itemCount = Baking.recipeList.size();
+        Log.d(TAG, "getItemCount: " + itemCount);
+        return itemCount;
     }
 
-    public class RecipeListViewHolder extends RecyclerView.ViewHolder {
-        public TextView nameTextView;
-        public TextView servingsTextView;
-        final Context mContext;
-        public RecipeListViewHolder(View itemView, Context context) {
-            super(itemView);
-            mContext = context;
-            this.nameTextView = itemView.findViewById(R.id.id_name);
-            this.servingsTextView = itemView.findViewById(R.id.id_servings);
+    class RecipeListViewHolder extends RecyclerView.ViewHolder {
+        TextView nameTextView;
+        TextView servingsTextView;
+        Context mContext;
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+        RecipeListViewHolder(View recipeListView, Context context) {
+            super(recipeListView);
+            this.mContext = context;
+            this.nameTextView = recipeListView.findViewById(R.id.id_name);
+            this.servingsTextView = recipeListView.findViewById(R.id.id_servings);
+
+            recipeListView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // get position
-                    int pos = (getAdapterPosition() + 1);
-                    Intent intent = new Intent(mContext, RecipeDetailActivity.class);
-                    intent.putExtra(ARG_RECIPE_ID, Integer.toString(pos));
-                    mContext.startActivity(intent);
+                    int arg_recipe_id = (getAdapterPosition() + 1);
+                    Intent detail_intent = new Intent(mContext, RecipeDetailActivity.class);
+                    detail_intent.putExtra(ARG_RECIPE_ID, arg_recipe_id);
+                    mContext.startActivity(detail_intent);
                 }
             });
         }

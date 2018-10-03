@@ -29,6 +29,11 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
+    public Ingredients getIngredient(int ingredient_number) {
+        List<Ingredients> ingredientsList = getIngredients();
+        return ingredientsList.get(ingredient_number);
+    }
+
     public List<Steps> getSteps() {
         return steps;
     }
@@ -37,8 +42,13 @@ public class Recipe {
         this.steps = steps;
     }
 
+    public Steps getStep(int step_number) {
+        List<Steps> stepsList = getSteps();
+        return stepsList.get(step_number);
+    }
+
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -46,7 +56,7 @@ public class Recipe {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
@@ -54,7 +64,7 @@ public class Recipe {
     }
 
     public String getImage() {
-        return image;
+        return this.image;
     }
 
     public void setImage(String image) {
@@ -62,7 +72,7 @@ public class Recipe {
     }
 
     public int getServings() {
-        return servings;
+        return this.servings;
     }
 
     public void setServings(int servings) {

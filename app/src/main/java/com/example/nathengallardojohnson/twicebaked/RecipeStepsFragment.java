@@ -3,16 +3,12 @@ package com.example.nathengallardojohnson.twicebaked;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.nathengallardojohnson.twicebaked.dummy.DummyContent;
-import com.example.nathengallardojohnson.twicebaked.dummy.DummyContent.DummyItem;
-import com.example.nathengallardojohnson.twicebaked.model.Ingredients;
 import com.example.nathengallardojohnson.twicebaked.model.Steps;
 
 import java.util.List;
@@ -27,9 +23,7 @@ public class RecipeStepsFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     public static String ARG_RECIPE_ID = "recipe";
-    private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
-    List<Ingredients> ingredientsList;
     List<Steps> stepsList;
     int mRecipeId;
 
@@ -50,7 +44,6 @@ public class RecipeStepsFragment extends Fragment {
 
         if (getArguments() != null) {
             mRecipeId = getArguments().getInt(ARG_RECIPE_ID);
-            this.ingredientsList = Baking.recipeList.get(mRecipeId).getIngredients();
             this.stepsList = Baking.recipeList.get(mRecipeId).getSteps();
         }
     }
@@ -64,12 +57,8 @@ public class RecipeStepsFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new StepsListAdapter(context, ingredientsList, stepsList));
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            recyclerView.setAdapter(new StepsListAdapter(context, stepsList));
         }
         return view;
     }
@@ -103,7 +92,6 @@ public class RecipeStepsFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(int position);
     }
 }

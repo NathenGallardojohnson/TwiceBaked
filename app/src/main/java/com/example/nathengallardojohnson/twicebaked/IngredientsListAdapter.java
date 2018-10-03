@@ -6,24 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.nathengallardojohnson.twicebaked.IngredientsFragment.OnListFragmentInteractionListener;
-import com.example.nathengallardojohnson.twicebaked.dummy.DummyContent.DummyItem;
+import com.example.nathengallardojohnson.twicebaked.model.Ingredients;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsListAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final List<Ingredients> mIngredientsList;
 
-    public IngredientsListAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
-        mListener = listener;
+    public IngredientsListAdapter(List<Ingredients> ingredientsList) {
+        mIngredientsList = ingredientsList;
     }
 
     @Override
@@ -35,43 +27,29 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
-
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });
+        holder.mIngredientTextView.setText(mIngredientsList.get(position).getIngredient());
+        holder.mQuantityTextView.setText(Float.toString(mIngredientsList.get(position).getQuantity()));
+        holder.mMeasureTextView.setText(mIngredientsList.get(position).getMeasure());
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mIngredientsList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final TextView mQuantityTextView;
+        public final TextView mMeasureTextView;
+        public final TextView mIngredientTextView;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mQuantityTextView = view.findViewById(R.id.quantity_text_view);
+            mMeasureTextView = view.findViewById(R.id.measure_text_view);
+            mIngredientTextView = view.findViewById(R.id.ingredient_text_view);
         }
 
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
-        }
     }
 }
