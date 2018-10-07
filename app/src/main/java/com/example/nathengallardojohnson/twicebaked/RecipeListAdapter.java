@@ -20,7 +20,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
     private final Context context;
     private String TAG = String.valueOf(getClass());
 
-    public RecipeListAdapter(Context context) {
+    RecipeListAdapter(Context context) {
         this.context = context;
         mInflater = LayoutInflater.from(context);
     }
@@ -70,15 +70,10 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             this.nameTextView = recipeListView.findViewById(R.id.id_name);
             this.servingsTextView = recipeListView.findViewById(R.id.id_servings);
 
-            recipeListView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // get position
-                    int arg_recipe_id = (getAdapterPosition() + 1);
-                    Intent detail_intent = new Intent(mContext, RecipeDetailActivity.class);
-                    detail_intent.putExtra(ARG_RECIPE_ID, arg_recipe_id);
-                    mContext.startActivity(detail_intent);
-                }
+            recipeListView.setOnClickListener(v -> {
+                Intent step_intent = new Intent(mContext, RecipeStepActivity.class);
+                step_intent.putExtra(ARG_RECIPE_ID, getAdapterPosition());
+                mContext.startActivity(step_intent);
             });
         }
     }

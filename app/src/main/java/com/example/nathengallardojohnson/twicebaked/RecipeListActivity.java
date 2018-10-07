@@ -19,7 +19,7 @@ public class RecipeListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        Baking.twoPane = findViewById(R.id.wide) != null;
+        Baking.twoPane = (findViewById(R.id.wide) != null);
 
         RecyclerView recyclerView = findViewById(R.id.recipe_list);
         recyclerView.setAdapter(new RecipeListAdapter(this));

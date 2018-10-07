@@ -24,7 +24,7 @@ public class Ingredients {
     }
 
 
-    public String getIngredient() {
+    private String getIngredient() {
         return this.ingredient;
     }
 
@@ -32,7 +32,7 @@ public class Ingredients {
         this.ingredient = ingredient;
     }
 
-    public float getQuantity() {
+    private float getQuantity() {
         return this.quantity;
     }
 
@@ -40,12 +40,17 @@ public class Ingredients {
         this.quantity = quantity;
     }
 
-    public String getMeasure() {
+    private String getMeasure() {
         return this.measure;
     }
 
     public void setMeasure(String measure) {
         this.measure = measure;
+    }
+
+    public String buildIngredientString() {
+        String quantityString = Float.toString(quantity);
+        return quantityString + " " + measure + " of " + ingredient + "\n";
     }
 
 }

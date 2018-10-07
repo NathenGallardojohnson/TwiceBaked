@@ -536,5 +536,9 @@
   }
 ]</string>
     <string name="no_data">no data</string>
-  <string name="ingredients">Ingredients</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="recipe_steps">Recipe Steps</string>
+    <string name="step_tool_text">Step description</string>
+    <string name="number_tool_text">1</string>
+    <string name="recipe_name_tool_text">RECIPE NAME</string>
 </resources>
