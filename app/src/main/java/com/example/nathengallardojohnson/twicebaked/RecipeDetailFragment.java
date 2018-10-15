@@ -1,5 +1,6 @@
 package com.example.nathengallardojohnson.twicebaked;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -31,6 +32,7 @@ public class RecipeDetailFragment extends Fragment {
     static String mVideoURL = " ";
     PlayerView playerView;
     SimpleExoPlayer player;
+    Context context;
 
     public RecipeDetailFragment() {
     }
@@ -44,6 +46,7 @@ public class RecipeDetailFragment extends Fragment {
         mStep = Baking.recipeList.get(mRecipeId).getStep(mStepId);
         mDescription = mStep.getDescription();
         mVideoURL = mStep.getVideoURL();
+        context = getActivity();
 
     }
 
@@ -51,9 +54,20 @@ public class RecipeDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
+
+        if (savedInstanceState != null) {
+            mRecipeId = savedInstanceState.getInt(ARG_RECIPE_ID, 0);
+            mStepId = savedInstanceState.getInt(ARG_STEP_ID, 0);
+            mStep = Baking.recipeList.get(mRecipeId).getStep(mStepId);
+            mDescription = mStep.getDescription();
+            mVideoURL = mStep.getVideoURL();
+        }
         TextView descriptionTextView = rootView.findViewById(R.id.description_text_view);
         descriptionTextView.setText(mDescription);
         playerView = rootView.findViewById(R.id.player_view);
+        if (!mVideoURL.isEmpty()) {
+            getPlayer();
+        }
         return rootView;
     }
 
@@ -61,9 +75,7 @@ public class RecipeDetailFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if (!mVideoURL.isEmpty()) {
-            getPlayer();
-        }
+
     }
 
     @Override
@@ -86,6 +98,12 @@ public class RecipeDetailFragment extends Fragment {
         releasePlayer();
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle currentState) {
+        currentState.putInt(ARG_RECIPE_ID, mRecipeId);
+        currentState.putInt(ARG_STEP_ID, mStepId);
+    }
+
     private void getPlayer() {
         if (player == null) {
             player = ExoPlayerFactory.newSimpleInstance(getActivity());
@@ -96,8 +114,8 @@ public class RecipeDetailFragment extends Fragment {
             player.setPlayWhenReady(true);
         }
         DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(
-                getActivity(), Util.getUserAgent(getContext(), getString(R.string.app_name)));
-        HttpProxyCacheServer proxy = Baking.getProxy(getActivity());
+                context, Util.getUserAgent(getContext(), getString(R.string.app_name)));
+        HttpProxyCacheServer proxy = Baking.getProxy(context);
         String proxyUrl = proxy.getProxyUrl(mVideoURL);
         MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(Uri.parse(proxyUrl));
